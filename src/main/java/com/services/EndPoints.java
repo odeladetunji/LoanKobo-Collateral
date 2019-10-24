@@ -16,7 +16,6 @@ import java.util.Optional;
 @Service
 public class EndPoints implements CollateralServiceInterface {
 
-
     BeanGenerators beanGenerators;
 
     @Autowired
@@ -29,11 +28,9 @@ public class EndPoints implements CollateralServiceInterface {
     public BeanGenerators collateralBean(Collateral payload){
         beanGenerators.aCollateral().borrowersName = payload.borrowersName;
         beanGenerators.aCollateral().condition = payload.condition;
-//        beanGenerators.aCollateral().Id = payload.Id;
         beanGenerators.aCollateral().property_value = payload.property_value;
         beanGenerators.aCollateral().propertyName = payload.propertyName;
         beanGenerators.aCollateral().status = payload.status;
-
         return beanGenerators;
     }
 

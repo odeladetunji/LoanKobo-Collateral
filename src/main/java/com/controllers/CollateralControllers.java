@@ -14,31 +14,31 @@ public class CollateralControllers {
     CollateralServiceInterface collateralServiceInterface;
 
     @ResponseBody
-    @GetMapping(value = "/")
+    @GetMapping(path = "/")
     public String ping(){
         return "ping successfull";
     }
 
     @ResponseBody
-    @PostMapping(value = "/addCollateral")
+    @PostMapping(path = "/addCollateral")
     public String addCollateral(@RequestBody Collateral payload){
         return collateralServiceInterface.addCollateral(payload);
     }
 
     @ResponseBody
-    @PostMapping(value = "/addCollateral")
+    @PostMapping(path = "/getCollateral")
     public List<Collateral> getCollateral(@RequestParam ID payload){
         return collateralServiceInterface.getCollaterals(payload);
     }
 
     @ResponseBody
-    @PostMapping(value = "/editCollateral")
+    @PostMapping(path = "/editCollateral")
     public String editCollateral(@RequestBody Collateral payload){
         return collateralServiceInterface.editCollateral(payload);
     }
 
     @ResponseBody
-    @PostMapping(value = "/deleteCollateral")
+    @PostMapping(path = "/deleteCollateral")
     public String deleteCollateral(@RequestParam ID payload){
         return collateralServiceInterface.deleteCollateral(payload);
     }
