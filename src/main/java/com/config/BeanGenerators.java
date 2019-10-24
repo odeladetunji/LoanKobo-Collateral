@@ -11,4 +11,5 @@ public class BeanGenerators {
     public Collateral aCollateral(){
         return new Collateral();
     }
+
 }

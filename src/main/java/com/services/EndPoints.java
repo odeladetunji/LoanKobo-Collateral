@@ -7,25 +7,29 @@ import com.factory.ProducerFactory;
 import com.models.Collateral;
 import com.models.ID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class EndPoints implements CollateralServiceInterface {
 
-    private BeanGenerators beanGenerators;
+
+    BeanGenerators beanGenerators;
 
     @Autowired
-    private  CollateralRepository collateralRepository;
+    CollateralRepository collateralRepository;
+
+    @Autowired
+    CollateralServiceInterface collateralServiceInterface;
+
 
     public BeanGenerators collateralBean(Collateral payload){
         beanGenerators.aCollateral().borrowersName = payload.borrowersName;
         beanGenerators.aCollateral().condition = payload.condition;
-        beanGenerators.aCollateral().Id = payload.Id;
+//        beanGenerators.aCollateral().Id = payload.Id;
         beanGenerators.aCollateral().property_value = payload.property_value;
         beanGenerators.aCollateral().propertyName = payload.propertyName;
         beanGenerators.aCollateral().status = payload.status;
@@ -57,13 +61,11 @@ public class EndPoints implements CollateralServiceInterface {
 
     }
 
-
-
     @Override
     public String addCollateral (Collateral payload){
-
+        com.entity.Collateral userCollateral = collateralBean(payload).aCollateral();
         try {
-            collateralRepository.save(collateralBean(payload));
+            collateralRepository.save(userCollateral);
             return "Successfull";
         }catch (Exception ex){
             System.out.println(ex);
@@ -73,8 +75,12 @@ public class EndPoints implements CollateralServiceInterface {
 
     @Override
     public String deleteCollateral(ID payload){
+        Optional<com.entity.Collateral> aCollateral = collateralRepository.findById(payload.Id);
+        com.entity.Collateral obj = aCollateral.get();
+        obj.setId(payload.Id);
+
         try {
-            collateralRepository.delete(payload.Id);
+            collateralRepository.delete(obj);
             return "deleted successfully";
         }catch (Exception ex){
             return "delete unsuccessfull";
@@ -83,10 +89,12 @@ public class EndPoints implements CollateralServiceInterface {
 
     @Override
     public String editCollateral(Collateral payload){
-
+        Optional<com.entity.Collateral> aCollateral = collateralRepository.findById(payload.Id);
+        com.entity.Collateral obj = aCollateral.get();
+        obj.setId(payload.Id);
 
         try {
-            collateralRepository.save(collateralBean(payload));
+            collateralRepository.save(obj);
             return "successfull";
         }catch (Exception ex){
             return "unsuccessfull";

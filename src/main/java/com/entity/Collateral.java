@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Collateral {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true)
     public Long Id;
 
     @Column(name = "property_name")
